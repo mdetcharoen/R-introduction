@@ -1,0 +1,223 @@
+---
+title: "A Hands-On Introduction to R"
+format: 
+  html:
+    toc: true
+    theme: cosmo
+editor: visual
+---
+
+## Introduction
+
+This document is your interactive worksheet for our R workshop. We will move from foundational concepts to creating publication-quality graphics.
+
+R is a language for statistical computing and graphics. Proficiency in R is a critical skill for reproducible research.
+
+---
+
+## Part 1: Foundational concepts
+
+#### **Basic operations**
+
+R can be used as a calculator. We use the assignment operator `<-` to store values in objects (variables).
+
+```{r basic-operations}
+# Standard arithmetic operations
+5 + 3
+4 * 7
+
+# Exponents and order of operations
+(5 + 5) * 2
+```
+
+
+#### **Object Assignment**
+
+
+```{r object-assignment}
+# The value 10 is assigned to the object 'a'
+a <- 10
+
+# Perform a calculation with 'a' and store it in a new object
+result <- a * 5
+
+# Display the contents of the object
+result
+```
+
+
+#### **Using Functions**
+
+Functions perform specific tasks. The syntax is `function_name(argument1, ...)`. To get help, use `?`.
+
+```{r using-functions}
+# The sqrt() function computes the square root
+sqrt(144)
+
+# The round() function rounds a number
+round(3.14159, digits = 2)
+```
+
+
+
+
+#### Your turn️: Practice with Objects
+
+Create two objects, `my_weight_kg` and `my_height_m`, assigning them numeric values. Then, calculate the Body Mass Index (BMI) using the formula $BMI = \frac{weight(kg)}{height(m)^2}$ and store the result in an object named `my_bmi`. Print the `my_bmi` object.
+
+```{r exercise-bmi}
+# Your code here
+```
+
+::: {.callout-tip collapse="true"}
+##### Solution
+```{r solution-bmi, eval=FALSE}
+my_weight_kg <- 70
+my_height_m <- 1.75
+
+my_bmi <- my_weight_kg / (my_height_m^2)
+my_bmi
+```
+:::
+
+---
+
+## Part 2: Working with data
+
+#### **Inspecting a data frame**
+
+Data frames are tables that hold your data. We can inspect the built-in `mtcars` dataset using functions like `head()`, `str()`, and `summary()`.
+
+```{r inspect-dataframe}
+# View the first 6 rows
+head(mtcars)
+
+# Inspect the structure (column names and data types)
+str(mtcars)
+
+# Obtain a statistical summary
+summary(mtcars)
+```
+
+#### Your turn️: Inspect a new dataset
+
+R has another famous built-in dataset called `iris`. Use the inspection functions (`head`, `str`, `summary`) to answer the following questions:
+1.  How many observations (rows) and variables (columns) are in the dataset?
+2.  What is the data type of the `Species` column?
+3.  What is the mean `Sepal.Length`?
+
+```{r exercise-iris-inspection}
+# Your code here
+```
+
+::: {.callout-tip collapse="true"}
+##### Solution
+```{r solution-iris-inspection, eval=FALSE}
+# This command answers all three questions
+str(iris) 
+
+# This command provides a more detailed statistical answer for question 3
+summary(iris)
+```
+*You'll see from `str(iris)` that there are 150 observations of 5 variables. The `Species` column is a `Factor`, and the mean `Sepal.Length` is 5.843.*
+:::
+
+---
+
+## Part 3: Data visualization
+
+### **3.1 Plotting with base R**
+
+Base R is great for creating quick, exploratory plots.
+
+```{r base-r-plots}
+# Base R histogram
+hist(mtcars$mpg,
+     main = "Distribution of miles per gallon",
+     xlab = "Miles per gallon (MPG)")
+```
+
+#### Your turn️: Create a Base R Scatter Plot
+
+Using **base R**, create a **scatter plot** to investigate the relationship between horsepower (`hp`) and quarter-mile time (`qsec`) from the `mtcars` dataset. Be sure to give your plot a title and appropriate axis labels using the `main`, `xlab`, and `ylab` arguments.
+
+```{r exercise-base-plot}
+# Your code here
+```
+
+::: {.callout-tip collapse="true"}
+##### Solution
+```{r solution-base-plot, eval=FALSE}
+plot(x = mtcars$hp, y = mtcars$qsec,
+     main = "Horsepower vs. Quarter-Mile Time",
+     xlab = "Horsepower (hp)",
+     ylab = "Quarter-Mile Time (seconds)")
+```
+:::
+
+### **3.2 Plotting with `ggplot2`**
+
+`ggplot2` is a popular package for creating complex, layered graphics. First, we must load the package.
+
+```{r setup-ggplot2}
+library(ggplot2)
+```
+
+`ggplot2` builds plots in layers: `ggplot(data, aes(x, y)) + geom_*()`.
+
+```{r ggplot2-histogram}
+# Histogram with ggplot2
+ggplot(data = mtcars, mapping = aes(x = mpg)) +
+  geom_histogram(binwidth = 5, fill = "royalblue", color = "black") +
+  labs(title = "Distribution of miles per gallon",
+       x = "Miles per gallon (MPG)",
+       y = "Frequency")
+```
+
+#### Your Turn️ (Part A): Advanced Scatter Plot
+
+Create a `ggplot2` scatter plot of weight (`wt`) vs. MPG (`mpg`). Enhance it by mapping aesthetics to other variables:
+* Map the **color** of the points to the number of cylinders (`cyl`). **Hint:** Treat `cyl` as a factor: `as.factor(cyl)`.
+* Map the **size** of the points to the car's horsepower (`hp`).
+* Add informative labels and a title using `labs()`.
+
+```{r exercise-ggplot-aesthetics}
+# Your ggplot2 code here
+```
+
+::: {.callout-tip collapse="true"}
+##### Solution
+```{r solution-ggplot-aesthetics, eval=FALSE}
+ggplot(data = mtcars, 
+       mapping = aes(x = wt, y = mpg, color = as.factor(cyl), size = hp)) +
+  geom_point(alpha = 0.7) + # alpha adds transparency
+  labs(title = "Fuel Efficiency vs. Weight by Cylinders and Horsepower",
+       subtitle = "Heavier, more powerful cars tend to have lower MPG",
+       x = "Weight (1000 lbs)",
+       y = "Miles Per Gallon (MPG)",
+       color = "Cylinders",
+       size = "Horsepower")
+```
+:::
+
+#### Your turn️ (Part B): Create a box plot
+
+Use `ggplot2` to create **box plots** that compare the distribution of horsepower (`hp`) across the different number of gears (`gear`).
+* Put `gear` on the x-axis and `hp` on the y-axis.
+* Remember to treat `gear` as a categorical factor.
+* Customize the plot with a fill color and informative labels.
+
+```{r exercise-ggplot-boxplot}
+# Your ggplot2 code here
+```
+
+::: {.callout-tip collapse="true"}
+##### Solution
+```{r solution-ggplot-boxplot, eval=FALSE}
+ggplot(data = mtcars, mapping = aes(x = as.factor(gear), y = hp)) +
+  geom_boxplot(fill = "lightblue", outlier.color = "red") +
+  labs(title = "Horsepower distribution by number of gears",
+       x = "Number of gears",
+       y = "Gross horsepower (hp)")
+```
+:::
