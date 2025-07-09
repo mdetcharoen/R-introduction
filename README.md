@@ -7,7 +7,7 @@ Repository for the "Introduction to R". This repository contains all the materia
 ### Instructions for students
 
 1.  Please read the complete class transcript to familiarize yourself with the concepts and code we will be covering. You can view the formatted transcript here:
-    * [**View Class Transcript Here**](class_transcript.html)
+    * [class_transcript.html](https://github.com/mdetcharoen/R-introduction/blob/main/class_transcript.html)
 
 2.  We will work through the exercises together in a live RStudio environment. To launch the interactive session directly in your browser (no installation required), click the badge below:
     * [![RStudio on Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/mdetcharoen/R-introduction/main?urlpath=rstudio)
