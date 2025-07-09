@@ -10,7 +10,7 @@ Repository for the "Introduction to R". This repository contains all the materia
     * [**View Class Transcript Here**](class_transcript.html)
 
 2.  We will work through the exercises together in a live RStudio environment. To launch the interactive session directly in your browser (no installation required), click the badge below:
-    * [![RStudio on Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/YourGitHubUsername/YourRepoName/main?urlpath=rstudio)
+    * [![RStudio on Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/mdetcharoen/R-introduction/main?urlpath=rstudio)
     * *Note: The environment may take a few minutes to load the first time.*
 
 ---
